@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Generator FORM Mysql</title>
+    <link rel="stylesheet" type="text/css" href="my_css.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <div class="cuerpo">
+        <div class="clase" id="obj-class">
+            <div id="dxy" class="move-class"><i class="fas fa-expand-arrows-alt"></i></div>
+            <div class="header-class">
+                <h4><i class="fas fa-cube"></i> 
+                    <div class="nombre-clase"> 
+                       <label> Nombre de la clase </label>
+                    </div>
+                </h4>
+            </div>
+            <div class="body-class">
+                <div class="opciones-attr">
+                    <button class="btn btn-sm btn-success" id="bnt-anadir-atrr">Añadir</button>
+                </div>
+
+                <div id="attr-1" class="attr">
+                    <div class="attr-clase" id="attr-class-1" onClick="pressAtr('attr-class-1');"> 
+                        <label>Attr class</label>
+                    </div>
+
+                    <select id="attr-c">
+                        <option>Class atributo</option>
+                        <option value="1">Entero</option>
+                        <option value="2">String</option>
+                    </select> 
+                    <select id="attr-m">
+                        <option>Mysql atributo</option>
+                        <option value="11">Entero</option>
+                        <option value="22">String</option>
+                    </select> 
+                </div>
+
+            
+            </div>
+        </div>
+        <div class="footer-generate">
+                <a href="javascript:void(0)" id="dlbtn">
+                        <button class="btn btn-sm btn-primary" id="bnt-generar">GENERAR</button>
+                </a>
+        </div>
+
+    </div>
+
+    <script src="jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="funciones.js"></script>
+    <script src="https://kit.fontawesome.com/0b1730660b.js"></script>
+
+    <script>
+
+    function showDiv(pageid)
+    {
+    alert(pageid);
+    }
+
+
+    var touchtime = 0;
+    $(".nombre-clase").on("click", function() {
+        if (touchtime == 0) {
+            // set first click
+            touchtime = new Date().getTime();
+        } else {
+            // compare first click to this click and see if they occurred within double click threshold
+            if (((new Date().getTime()) - touchtime) < 800) {
+                // double click occurred
+                var labelTextSize = $(this).text().length;
+                var labelText = $(this).text().replace(/\s/g, '');
+
+                if(labelTextSize>0){
+                    $(this).empty().append($('<input id="va-cls" value="'+labelText+'">'));
+                    labelText = $(this).find('input').val();
+                    console.log("Ingreso label: "+labelText)
+                }
+
+                $("#va-cls").keydown(function (e){
+                    if(e.keyCode == 13){
+
+                        if($(".nombre-clase").find('input')){
+                            labelText = $("#va-cls").val();
+                            console.log("Ingreso key1 "+labelText)
+                        }else if($(".nombre-clase").find('label')){
+                            labelText = $("#va-cls").text();
+                            console.log("Ingreso key2 "+labelText)
+                        }else{
+                            labelText = $(".nombre-clase").text().replace(/\s/g, '');
+                            console.log("Ingreso key3 "+labelText)
+                        }
+
+                        $(".nombre-clase").empty().append($('<label id="va-cls">').append(labelText));
+                        console.log("Ingreso key "+labelText)
+                    }
+                })
+
+                touchtime = 0;
+            } else {
+                // not a double click so set as a new first click
+                touchtime = new Date().getTime();
+            }
+        }
+    });
+
+
+
+    var touchtime2 = 0;
+    function pressAtr(idDivCampo){
+        idDivCampo = idDivCampo.replace(/\s/g, '')
+        if (touchtime2 == 0) {
+            // set first click
+            touchtime2 = new Date().getTime();
+        } else {
+            // compare first click to this click and see if they occurred within double click threshold
+            if (((new Date().getTime()) - touchtime2) < 800) {
+                // double click occurred
+               
+                var labelTextSize = $("#"+idDivCampo).text().length;
+                var labelText =  $("#"+idDivCampo).text().replace(/\s/g, '');
+
+                if(labelTextSize>0){
+                    $("#"+idDivCampo).empty().append($('<input value="'+labelText+'">'));
+                    labelText =  $("#"+idDivCampo).find('input').val();
+                    console.log("Ingreso label: "+labelText)
+                }
+
+                console.log("Ingreso label: "+labelText)
+                
+
+                $("#"+idDivCampo).find('input').keydown(function (e){
+                    if(e.keyCode == 13){
+
+                        if($("#"+idDivCampo).find('input')){
+                            labelText = $("#"+idDivCampo).find('input').val();
+                            console.log("Ingreso key1 "+labelText)
+                        }else if( $("#"+idDivCampo).find('label')){
+                            labelText = $("#"+idDivCampo).find('label').text();
+                            console.log("Ingreso key2 "+labelText)
+                        }else{
+                            labelText =  $("#"+idDivCampo).text().replace(/\s/g, '');
+                            console.log("Ingreso key3 "+labelText)
+                        }
+
+                        $("#"+idDivCampo).empty().append($('<label>').append(labelText));
+                        console.log("Ingreso key "+labelText)
+                    }
+                })
+
+                touchtime2 = 0;
+            } else {
+                // not a double click so set as a new first click
+                touchtime2 = new Date().getTime();
+            }
+        }
+    }
+
+
+    $("#bnt-anadir-atrr").click(function(){
+        var countItemAtrr = 0;
+        $(".body-class").children('.attr').each(function(index, e) {
+            countItemAtrr = index;
+        });
+
+        var idLast = $(".body-class").children('.attr')[countItemAtrr].id;
+        var idLastSeprate = parseInt(idLast.split('-')[1]) + 1;
+        console.log(idLastSeprate);
+
+        ///onclick='pressAtr(\'attr-class\')'
+
+        var newElement  = $('<div id="attr-'+idLastSeprate+'" class="attr">').append(
+            $('<div class="attr-clase" id="attr-class-'+idLastSeprate+'">').append("Attr class ")
+                .attr('onClick','pressAtr(\'attr-class-'+idLastSeprate+'\')')
+        ).append(
+            $('<select id="attr-c">').append(
+                    $('<option>').append("Class atributo"),
+                    $('<option value="1">').append("Entero"),
+                    $('<option value="2">').append("String")
+            )
+        ).append(
+            $('<select id="attr-m">').append(
+                    $('<option>').append("Mysql atributo"),
+                    $('<option value="11">').append("Entero"),
+                    $('<option value="22">').append("String")
+            )
+        );
+
+        $(newElement).insertAfter("#"+idLast);
+    });
+
+
+
+$("#bnt-generar").click(function(){
+    var nombreClase = $(".nombre-clase").text().replace(/\s/g, '');
+    //alert(nombreClase)
+    var finalText = "";
+    var attrName = [];
+    var attrCop = [];
+    var attrMop = [];
+
+    $(".body-class").children('.attr').each(function(index, e) {
+        /*alert($(this).find(".attr-clase").text().replace(/\s/g, ''))
+        alert($(this).find('#attr-c option:selected').val().replace(/\s/g, ''))
+        alert($(this).find('#attr-m option:selected').val().replace(/\s/g, ''))*/
+        attrName.push($(this).find(".attr-clase").text().replace(/\s/g, ''))
+        attrCop.push($(this).find('#attr-c option:selected').val().replace(/\s/g, ''))
+        attrMop.push($(this).find('#attr-m option:selected').val().replace(/\s/g, ''))
+    });
+
+    console.log(attrName)
+    console.log(attrCop)
+    console.log(attrMop)
+
+    finalText += "<?php \n";
+    finalText +="class "+nombreClase+" { \n";
+    
+    attrName.forEach((e) =>{
+        finalText +="\t$"+e+";\n";
+    })
+
+    finalText += "}\n";
+    finalText += "?>\n";
+
+    console.log(finalText)
+
+    //create(finalText, nombreClase+'.php', 'text/plain')
+
+
+})
+
+function create(text, name, type) {
+  var dlbtn = document.getElementById("dlbtn");
+  var file = new Blob([text], {type: type});
+  dlbtn.href = URL.createObjectURL(file);
+  dlbtn.download = name;
+}
+
+
+
+
+
+    function jqUpdateSize(){
+            // Get the dimensions of the viewport
+            var width = $(window).width();
+            var heightW = $(window).height();
+            var heightD = $(document).height();
+            var height = 0;
+
+            if (heightW>heightD) {
+                height += heightW;
+            }else{
+                height += heightD;
+            }
+
+            console.log(heightW+"w - d"+heightD+" - h"+height);
+
+            $('#jqWidth').html(width);
+            $('#jqHeight').html(height);
+
+            $('.cuerpo').css(
+            {
+                height:  height
+            }
+            );
+
+        }
+        $(document).ready(jqUpdateSize);    // When the page first loads
+        $(window).resize(jqUpdateSize);     // When the browser changes size
+    </script>
+    
+</body>
+</html>
