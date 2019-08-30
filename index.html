@@ -31,16 +31,20 @@
                         <label>Attr class</label>
                     </div>
 
-                    <select id="attr-c">
-                        <option>Class atributo</option>
-                        <option value="1">Entero</option>
-                        <option value="2">String</option>
-                    </select> 
-                    <select id="attr-m">
-                        <option>Mysql atributo</option>
-                        <option value="11">Entero</option>
-                        <option value="22">String</option>
-                    </select> 
+                    <div id="attr-left" class="float-right">
+                        <select id="attr-c" class="brd">
+                            <option>Class atributo</option>
+                            <option value="1">Entero</option>
+                            <option value="2">String</option>
+                        </select> 
+                        <select id="attr-m">
+                            <option>Mysql atributo</option>
+                            <option value="11">Entero</option>
+                            <option value="22">String</option>
+                        </select>
+                        <button class="btn btn-sm btn-warning" id="btn-succ" onClick="eleminarAtributo('attr-1');">ELIMINAR</button> 
+                    </div>
+
                 </div>
 
             
@@ -50,6 +54,10 @@
                 <a href="javascript:void(0)" id="dlbtn">
                         <button class="btn btn-sm btn-primary" id="bnt-generar">GENERAR</button>
                 </a>
+                <div style="display: inline-block; width: 529px; background: #007bff; color: white; font-family: monospace;">
+                    PARA EDITAR LOS ATRIBUTOS O NOMBRE DE LA CLASE DAR DOBLE CLICK y enter para guardar.
+                    EN LA CONSOLA APARECERA LOS ARCHIVOS CREADOS
+                </div>
         </div>
 
     </div>
@@ -83,7 +91,7 @@
                 if(labelTextSize>0){
                     $(this).empty().append($('<input id="va-cls" value="'+labelText+'">'));
                     labelText = $(this).find('input').val();
-                    console.log("Ingreso label: "+labelText)
+                    //console.log("Ingreso label: "+labelText)
                 }
 
                 $("#va-cls").keydown(function (e){
@@ -91,17 +99,17 @@
 
                         if($(".nombre-clase").find('input')){
                             labelText = $("#va-cls").val();
-                            console.log("Ingreso key1 "+labelText)
+                            //console.log("Ingreso key1 "+labelText)
                         }else if($(".nombre-clase").find('label')){
                             labelText = $("#va-cls").text();
-                            console.log("Ingreso key2 "+labelText)
+                            ///console.log("Ingreso key2 "+labelText)
                         }else{
                             labelText = $(".nombre-clase").text().replace(/\s/g, '');
-                            console.log("Ingreso key3 "+labelText)
+                            //console.log("Ingreso key3 "+labelText)
                         }
 
                         $(".nombre-clase").empty().append($('<label id="va-cls">').append(labelText));
-                        console.log("Ingreso key "+labelText)
+                        //console.log("Ingreso key "+labelText)
                     }
                 })
 
@@ -132,10 +140,13 @@
                 if(labelTextSize>0){
                     $("#"+idDivCampo).empty().append($('<input value="'+labelText+'">'));
                     labelText =  $("#"+idDivCampo).find('input').val();
-                    console.log("Ingreso label: "+labelText)
+                    //console.log("Ingreso label: "+labelText)
+                }else{
+                    $("#"+idDivCampo).empty().append($('<input value="'+labelText+'">'));
+                    labelText =  $("#"+idDivCampo).find('input').val();
                 }
 
-                console.log("Ingreso label: "+labelText)
+                //console.log("Ingreso label: "+labelText)
                 
 
                 $("#"+idDivCampo).find('input').keydown(function (e){
@@ -143,17 +154,17 @@
 
                         if($("#"+idDivCampo).find('input')){
                             labelText = $("#"+idDivCampo).find('input').val();
-                            console.log("Ingreso key1 "+labelText)
+                            //console.log("Ingreso key1 "+labelText)
                         }else if( $("#"+idDivCampo).find('label')){
                             labelText = $("#"+idDivCampo).find('label').text();
-                            console.log("Ingreso key2 "+labelText)
+                            //console.log("Ingreso key2 "+labelText)
                         }else{
                             labelText =  $("#"+idDivCampo).text().replace(/\s/g, '');
-                            console.log("Ingreso key3 "+labelText)
+                            //console.log("Ingreso key3 "+labelText)
                         }
 
                         $("#"+idDivCampo).empty().append($('<label>').append(labelText));
-                        console.log("Ingreso key "+labelText)
+                        //console.log("Ingreso key "+labelText)
                     }
                 })
 
@@ -174,24 +185,30 @@
 
         var idLast = $(".body-class").children('.attr')[countItemAtrr].id;
         var idLastSeprate = parseInt(idLast.split('-')[1]) + 1;
-        console.log(idLastSeprate);
+        //console.log(idLastSeprate);
 
         ///onclick='pressAtr(\'attr-class\')'
 
         var newElement  = $('<div id="attr-'+idLastSeprate+'" class="attr">').append(
-            $('<div class="attr-clase" id="attr-class-'+idLastSeprate+'">').append("Attr class ")
+            $('<div class="attr-clase" id="attr-class-'+idLastSeprate+'">').append($('<label>').append("Attr class "))
                 .attr('onClick','pressAtr(\'attr-class-'+idLastSeprate+'\')')
-        ).append(
+        ).append($('<div id="attr-left" class="float-right">')
+            .append(
             $('<select id="attr-c">').append(
                     $('<option>').append("Class atributo"),
                     $('<option value="1">').append("Entero"),
                     $('<option value="2">').append("String")
             )
-        ).append(
-            $('<select id="attr-m">').append(
-                    $('<option>').append("Mysql atributo"),
-                    $('<option value="11">').append("Entero"),
-                    $('<option value="22">').append("String")
+            ).append(
+                $('<select id="attr-m">').append(
+                        $('<option>').append("Mysql atributo"),
+                        $('<option value="11">').append("Entero"),
+                        $('<option value="22">').append("String")
+                )
+            ).append(
+                $('<button class="btn btn-sm btn-warning" id="btn-succ">').append(
+                    "ELIMINAR"
+                ).attr('onClick','eleminarAtributo(\'attr-'+idLastSeprate+'\')')
             )
         );
 
@@ -217,9 +234,9 @@ $("#bnt-generar").click(function(){
         attrMop.push($(this).find('#attr-m option:selected').val().replace(/\s/g, ''))
     });
 
-    console.log(attrName)
-    console.log(attrCop)
-    console.log(attrMop)
+    //console.log(attrName)
+   //console.log(attrCop)
+    //console.log(attrMop)
 
     finalText += "<?php \n";
     finalText +="class "+nombreClase+" { \n";
@@ -231,7 +248,9 @@ $("#bnt-generar").click(function(){
     finalText += "}\n";
     finalText += "?>\n";
 
-    console.log(finalText)
+    formMysqlScrpt(nombreClase,attrCop,attrMop)
+
+    //console.log(finalText)
 
     //create(finalText, nombreClase+'.php', 'text/plain')
 
@@ -246,7 +265,30 @@ function create(text, name, type) {
 }
 
 
+function formMysqlScrpt(nameTable,arrayAttr,arrayAttrPop){
+    /*CREATE TABLE MyGuests (
+        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        firstname VARCHAR(30) NOT NULL,
+        lastname VARCHAR(30) NOT NULL,
+        email VARCHAR(50),
+        reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )*/
+    //console.log(arrayAttrPop)
+    var stringMysql = "";
+    stringMysql += "CREATE TABLE "+nameTable+" (\n";
+    arrayAttr.forEach((e, index) => {
+        //console.log(e);
+        //console.log(arrayAttrPop[index-1])
+        stringMysql += "\t"+e+" "+arrayAttrPop[index]+" ,\n";
+    });
+    stringMysql +=")"
+    console.log(stringMysql)
+}
 
+
+function eleminarAtributo(idButton){
+    $("#"+idButton).remove(); 
+}
 
 
     function jqUpdateSize(){
