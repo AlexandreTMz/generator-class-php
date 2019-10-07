@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="theme/css/bootstrap.min.css"  rel="stylesheet" type="text/css">
+    <link href="theme/css/my_css.css"  rel="stylesheet" type="text/css">
+</head>
+<body>
+
+    <div class="wrap">
+        <div class="option">
+            <button class="btn btn-small btn-primary">agregar</button>
+        </div>
+
+        <div class="contenedor">
+            <div class="clase-box" draggable="true">
+                <div class="clase-head">
+                    <h4>Persona</h4>
+                </div>
+                <div class="clase-body">
+                    <ul class="clase-attr">
+                        <li>Id_persona <small>int</small></li>
+                        <li>Nombre <small>varchar(100)</small></li>
+                        <li>Apellido <small>varchar(100)</small></li>
+                        <li>Edad <small>varchar(100)</small></li>
+                        <li>Dni <small>varchar(100)</small></li>
+                    </ul>
+                </div>
+                <div class="clase-footer">
+                    <h5>KEYS - MYSQL</h5>
+                    <ul>
+                        <li>Id_persona</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="theme/js/jquery-3.4.1.min.js"></script>
+    <script src="theme/js/bootstrap.js"></script>
+    <script src="https://kit.fontawesome.com/0b1730660b.js"></script>
+    <script type="text/javascript">
+
+    var height = $(window).height();
+
+   $('.wrap').css({'height':height+'px'});
+
+
+    var dragItem = document.querySelector(".clase-box");
+    var container = document.querySelector(".wrap");
+
+
+    var active = false;
+    var currentX;
+    var currentY;
+    var initialX;
+    var initialY;
+    var xOffset = 0;
+    var yOffset = 0;
+
+    container.addEventListener("touchstart", dragStart, false);
+    container.addEventListener("touchend", dragEnd, false);
+    container.addEventListener("touchmove", drag, false);
+
+    container.addEventListener("mousedown", dragStart, false);
+    container.addEventListener("mouseup", dragEnd, false);
+    container.addEventListener("mousemove", drag, false);
+
+    function dragStart(e) {
+      if (e.type === "touchstart") {
+        initialX = e.touches[0].clientX - xOffset;
+        initialY = e.touches[0].clientY - yOffset;
+      } else {
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+      }
+
+      if (e.target === dragItem) {
+        active = true;
+      }
+    }
+
+    function dragEnd(e) {
+      initialX = currentX;
+      initialY = currentY;
+
+      active = false;
+    }
+
+    function drag(e) {
+      if (active) {
+      
+        e.preventDefault();
+      
+        if (e.type === "touchmove") {
+          currentX = e.touches[0].clientX - initialX;
+          currentY = e.touches[0].clientY - initialY;
+        } else {
+          currentX = e.clientX - initialX;
+          currentY = e.clientY - initialY;
+        }
+
+        xOffset = currentX;
+        yOffset = currentY;
+
+        setTranslate(currentX, currentY, dragItem);
+      }
+    }
+
+    function setTranslate(xPos, yPos, el) {
+      el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+    }
+
+
+    </script>
+</body>
+</html>

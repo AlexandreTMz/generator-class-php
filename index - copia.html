@@ -8,7 +8,7 @@
     <link href="theme/css/bootstrap.min.css"  rel="stylesheet" type="text/css">
     <link href="theme/css/my_css.css"  rel="stylesheet" type="text/css">
     <link href="theme/css/my_class.css"  rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="theme/css/dd.css">
+    <link rel="stylesheet" href="theme/css/prism.css">
 
 </head>
 
@@ -40,6 +40,10 @@
   #yellow {
     height: 100%;
   }
+
+  pre {
+    height: 100%;
+  }
 </style>
 
 <body>
@@ -48,24 +52,25 @@
  <div class="view-code h-100" style="display: none;">
   <div class="row justify-content-center h-100">
     <div class="col-4 hidden-md-down" id="yellow">
-      <pre id="php">
-        <code class="php">
-          
-        </code>
-      </pre>
+      
+     
+
+    <pre id="php">
+        <code class="language-php"></code>
+    </pre>
+
+
     </div>
      <div class="col-4 hidden-md-down" id="yellow">
+
       <pre id="mysql">
-          <code class="sql">
-          
-        </code>
+          <code class="language-sql"></code>
       </pre>
+
     </div>
      <div class="col-4 hidden-md-down" id="yellow">
       <pre id="html">
-          <code class="html">
-          
-        </code>
+         <code class="language-html"></code>
       </pre>
     </div>
   </div>
@@ -158,6 +163,8 @@
 
 
 
+
+
 			     <!-- <div class="clase-box col-2">
                 <div class="clase-head">
                     <h4>Persona</h4>
@@ -182,7 +189,6 @@
 
 
 
-
 			</div>
 		</div>
 
@@ -196,12 +202,12 @@
     <script src="https://kit.fontawesome.com/0b1730660b.js"></script>
 
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/languages/php.min.js"></script>
+   <script src="theme/js/prism.js"></script>
 
+   <script src="theme/js/prism-php.js"></script>
+   
     <script src="theme/js/funcionesv2.js"></script>
     <script type="text/javascript">
-      hljs.initHighlightingOnLoad();
       var clases = [];
 
 
@@ -355,12 +361,14 @@
 
     function createPHP(){
       var finalText = "";
-      finalText += "<?php \n";
+      finalText +="<?php \n";
       finalText +="class "+clases[0].name_class+" { \n";
       
       clases[0].attr_class.forEach((e,a) =>{
           finalText +="\tpublic $"+e.attr_name+";\n";
       })
+      finalText +="\t__construct(){\n";
+      finalText +="\t}\n";
 
       finalText += "}\n";
       finalText += "?>\n";
@@ -385,7 +393,7 @@
     $('.opt-m').click(function(){
       $('.view-code').toggle();
 
-      $('#php code').text(html_encode(createPHP()));
+      $('#php code').append(html_encode(createPHP()));
       $('#mysql code').text(html_encode(createMYSQL()));
       $('#html code').text('21321');
 
@@ -393,9 +401,12 @@
 
       createPHP()
       createMYSQL()
+
+      Prism.highlightAll();
+
     });
 
-    function html_encode(string) {
+    function html_encwode(string) {
 	    var ret_val = '';
 	    for (var i = 0; i < string.length; i++) { 
 	        if (string.codePointAt(i) > 127) {
@@ -406,6 +417,16 @@
 	    }
 	    return ret_val;
 	}
+
+  function html_encode(str)
+{
+  str = str.replace(/&/g, "&amp;");
+  str = str.replace(/>/g, "&gt;");
+  str = str.replace(/</g, "&lt;");
+  str = str.replace(/"/g, "&quot;");
+  str = str.replace(/'/g, "&#039;");
+  return str;
+}
     //drag = new dragDrop(document.querySelector(".clase-box"),document.querySelector(".contenedor"));
     //drag.addListeners()
     //console.log(drag);
